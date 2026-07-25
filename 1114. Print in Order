@@ -1,0 +1,30 @@
+class Foo {
+int block;
+    public Foo() {
+        block = 1;
+    }
+
+    public synchronized void first(Runnable printFirst) throws InterruptedException {
+        // printFirst.run() outputs "first". Do not change or remove this line.
+        printFirst.run();
+        block = 2;
+        notifyAll();
+    }
+    public synchronized void second(Runnable printSecond) throws InterruptedException {
+        // printSecond.run() outputs "second". Do not change or remove this line.
+        while(block != 2){
+            wait();
+        }
+        printSecond.run();
+        block = 3;
+        notifyAll();
+    }
+    public synchronized void third(Runnable printThird) throws InterruptedException {
+        // printThird.run() outputs "third". Do not change or remove this line.
+        while(block != 3){
+            wait();
+        }
+        printThird.run();
+        notifyAll();
+    }
+}
